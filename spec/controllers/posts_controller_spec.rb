@@ -63,4 +63,11 @@ RSpec.describe PostsController, type: :controller do
       expect(assigns(:posts)).to(eq([p3, p2, p1]))
     end
   end
+  describe "destroy" do
+    it "should remove the post record from the post table" do
+      p = FactoryBot.create(:post)
+      delete(:destroy, params: { id: p.id })
+      expect(Post.find_by(id: p.id)).to(be(nil))
+    end
+  end
 end
