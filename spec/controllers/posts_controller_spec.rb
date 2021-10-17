@@ -12,11 +12,18 @@ RSpec.describe PostsController, type: :controller do
     end
   end
   describe "create" do
-    it "should add a record to the posts table" do
-      before_count = Post.all.count
-      post(:create, params: { post: FactoryBot.attributes_for(:post) })
-      after_count = Post.all.count
-      expect(after_count).to(eq(before_count + 1))
+    context "with valid parameters" do
+      it "should add a record to the posts table" do
+        before_count = Post.all.count
+        post(:create, params: { post: FactoryBot.attributes_for(:post) })
+        after_count = Post.all.count
+        expect(after_count).to(eq(before_count + 1))
+      end
+      it "should redirect to the show page for the created post" do
+        post(:create, params: { post: FactoryBot.attributes_for(:post) })
+        p = Post.last
+        expect(response).to(redirect_to(p))
+      end
     end
   end
 end

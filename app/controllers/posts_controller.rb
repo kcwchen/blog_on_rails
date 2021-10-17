@@ -5,5 +5,6 @@ class PostsController < ApplicationController
 
   def create
     @post = Post.create params.require(:post).permit(:title, :body)
+    redirect_to @post
   end
 end
