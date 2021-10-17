@@ -63,7 +63,7 @@ RSpec.describe PostsController, type: :controller do
       expect(assigns(:posts)).to(eq([p3, p2, p1]))
     end
   end
-  describe "destroy" do
+  describe "#destroy" do
     it "should remove the post record from the post table" do
       p = FactoryBot.create(:post)
       delete(:destroy, params: { id: p.id })
@@ -78,6 +78,18 @@ RSpec.describe PostsController, type: :controller do
       p = FactoryBot.create(:post)
       delete(:destroy, params: { id: p.id })
       expect(flash[:notice]).to(be)
+    end
+  end
+  describe "#edit" do
+    it "should render the edit template" do
+      p = FactoryBot.create(:post)
+      get(:edit, params: { id: p.id })
+      expect(response).to(render_template(:edit))
+    end
+    it "should assign instance variable for the post" do
+      p = FactoryBot.create(:post)
+      get(:edit, params: { id: p.id })
+      expect(assigns(:post)).to(eq(p))
     end
   end
 end
