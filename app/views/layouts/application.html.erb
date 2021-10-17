@@ -11,6 +11,15 @@
   </head>
 
   <body>
+    <nav class="navbar navbar-expand navbar-light bg-light">
+      <div class="container-fluid">
+        <%= link_to "Blog On Rails", root_path, class: "navbar-brand" %>
+        <div class="navbar-nav">
+          <%= link_to "Home", root_path, class: "nav-item nav-link" %>
+          <%= link_to "New Post", new_post_path, class: "nav-item nav-link" %>
+        </div>
+      </div>
+    </nav>
     <%= yield %>
   </body>
 </html>
