@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :post do
-    title { "MyString" }
-    body { "MyText" }
+    title { Faker::Job.title }
+    body { Faker::Lorem.paragraph }
   end
 end
