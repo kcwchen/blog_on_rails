@@ -107,5 +107,13 @@ RSpec.describe PostsController, type: :controller do
         expect(response).to(redirect_to(p))
       end
     end
+    context "with invalid parameters" do
+      it "should not update post record in the db" do
+        p = FactoryBot.create(:post)
+        new_title = "new title"
+        patch(:update, params: { id: p.id, post: {title: nil} })
+        expect(p.reload.title).to(eq(p.title))
+      end
+    end
   end
 end
