@@ -3,7 +3,9 @@
     <div class="card-body">
       <h1 class="card-title"><%= @post.title %></h1>
       <p class="card-text"><%= @post.body %></p>
-      <small>Posted <%= time_ago_in_words(@post.created_at) %> ago</small>
+      <p><small>Posted <%= time_ago_in_words(@post.created_at) %> ago</small></p>
+      <%= link_to "Edit", edit_post_path(@post.id), class: "btn btn-outline-primary" %>
+      <%= link_to "Delete", post_path(@post.id), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-outline-primary" %>
     </div>
   </div>
 </div>
