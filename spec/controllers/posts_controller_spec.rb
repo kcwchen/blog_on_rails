@@ -100,6 +100,12 @@ RSpec.describe PostsController, type: :controller do
         patch(:update, params: { id: p.id, post: {title: new_title} })
         expect(p.reload.title).to(eq(new_title))
       end
+      it "should redirect to the show page" do
+        p = FactoryBot.create(:post)
+        new_title = "new title"
+        patch(:update, params: { id: p.id, post: {title: new_title} })
+        expect(response).to(redirect_to(p))
+      end
     end
   end
 end
