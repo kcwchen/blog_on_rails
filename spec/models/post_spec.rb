@@ -15,5 +15,12 @@ RSpec.describe Post, type: :model do
         expect(p.errors.messages).to(have_key(:title))
       end
     end
+    describe "body" do
+      it "should have at least 50 characters" do
+        p = FactoryBot.build(:post, body: "a")
+        p.valid?
+        expect(p.errors.messages).to(have_key(:body))
+      end
+    end
   end
 end
