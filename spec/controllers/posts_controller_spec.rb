@@ -38,4 +38,11 @@ RSpec.describe PostsController, type: :controller do
       end
     end
   end
+  describe "show" do
+    it "should render the show template" do
+      p = FactoryBot.create(:post)
+      get(:show, params: { id: p.id })
+      expect(response).to(render_template(:show))
+    end
+  end
 end
