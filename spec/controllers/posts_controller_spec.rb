@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe PostsController, type: :controller do
-  describe "new" do
+  describe "#new" do
     it "should render the new template" do
       get(:new)
       expect(response).to(render_template(:new))
@@ -11,7 +11,7 @@ RSpec.describe PostsController, type: :controller do
       expect(assigns(:post)).to(be_a_new(Post))
     end
   end
-  describe "create" do
+  describe "#create" do
     context "with valid parameters" do
       it "should add a record to the posts table" do
         before_count = Post.all.count
@@ -38,7 +38,7 @@ RSpec.describe PostsController, type: :controller do
       end
     end
   end
-  describe "show" do
+  describe "#show" do
     it "should render the show template" do
       p = FactoryBot.create(:post)
       get(:show, params: { id: p.id })
@@ -48,6 +48,19 @@ RSpec.describe PostsController, type: :controller do
       p = FactoryBot.create(:post)
       get(:show, params: { id: p.id })
       expect(assigns(:post)).to(eq(p))
+    end
+  end
+  describe "#index" do
+    it "should render the index template" do
+      get(:index)
+      expect(response).to(render_template(:index))
+    end
+    it "should set instance variable with all posts" do
+      p1 = FactoryBot.create(:post)
+      p2 = FactoryBot.create(:post)
+      p3 = FactoryBot.create(:post)
+      get(:index)
+      expect(assigns(:posts)).to(eq([p3, p2, p1]))
     end
   end
 end
