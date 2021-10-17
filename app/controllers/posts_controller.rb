@@ -1,10 +1,12 @@
 class PostsController < ApplicationController
+  before_action :find_post, only: [:show, :destroy, :edit, :update]
+
   def new
     @post = Post.new
   end
 
   def create
-    @post = Post.new params.require(:post).permit(:title, :body)
+    @post = Post.new(post_params)
     if @post.save
       redirect_to @post
     else
@@ -13,7 +15,7 @@ class PostsController < ApplicationController
   end
 
   def show
-    @post = Post.find params[:id]
+
   end
 
   def index
@@ -21,18 +23,27 @@ class PostsController < ApplicationController
   end
 
   def destroy
-    @post = Post.find params[:id]
     @post.destroy
     redirect_to posts_path, notice: "Post Deleted"
   end
 
   def edit
-    @post = Post.find params[:id]
+
   end
 
   def update
-    @post = Post.find params[:id]
-    @post.update(params.require(:post).permit(:title, :body))
+ 
+    @post.update(post_params)
     redirect_to @post
+  end
+
+  private
+
+  def find_post
+    @post = Post.find params[:id]
+  end
+
+  def post_params
+    params.require(:post).permit(:title, :body)
   end
 end
