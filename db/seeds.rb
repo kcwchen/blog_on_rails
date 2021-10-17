@@ -5,3 +5,15 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+Post.destroy_all
+
+until Post.all.count == 50
+  Post.create(
+    title: Faker::Book.title,
+    body: Faker::Lorem.paragraph * rand(5..10)
+  )
+end
+
+posts = Post.all.count
+puts posts
