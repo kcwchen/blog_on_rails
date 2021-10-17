@@ -69,5 +69,10 @@ RSpec.describe PostsController, type: :controller do
       delete(:destroy, params: { id: p.id })
       expect(Post.find_by(id: p.id)).to(be(nil))
     end
+    it "should redirect to posts index page" do
+      p = FactoryBot.create(:post)
+      delete(:destroy, params: { id: p.id })
+      expect(response).to(redirect_to(posts_path))
+    end
   end
 end
