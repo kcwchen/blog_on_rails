@@ -44,5 +44,10 @@ RSpec.describe PostsController, type: :controller do
       get(:show, params: { id: p.id })
       expect(response).to(render_template(:show))
     end
+    it "should assign an instance variable for the show template" do
+      p = FactoryBot.create(:post)
+      get(:show, params: { id: p.id })
+      expect(assigns(:post)).to(eq(p))
+    end
   end
 end
