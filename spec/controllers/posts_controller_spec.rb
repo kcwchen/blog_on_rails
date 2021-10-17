@@ -92,4 +92,14 @@ RSpec.describe PostsController, type: :controller do
       expect(assigns(:post)).to(eq(p))
     end
   end
+  describe "#update" do
+    context "with valid parameters" do
+      it "should update the post record in the db" do
+        p = FactoryBot.create(:post)
+        new_title = "new title"
+        patch(:update, params: { id: p.id, post: {title: new_title} })
+        expect(p.reload.title).to(eq(new_title))
+      end
+    end
+  end
 end
