@@ -25,5 +25,13 @@ RSpec.describe PostsController, type: :controller do
         expect(response).to(redirect_to(p))
       end
     end
+    context "with invalid parameters" do
+      it "should not add a record to the posts table" do
+        before_count = Post.all.count
+        post(:create, params: { post: { title: nil, body: "abc" } })
+        after_count = Post.all.count
+        expect(after_count).to(eq(before_count))
+      end
+    end
   end
 end
