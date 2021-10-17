@@ -1,4 +1,14 @@
 <div class="container-fluid mt-3">
+  <% if @post.errors.any? %>
+    <% @post.errors.full_messages.each do |msg|%>
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <%= msg %>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    <% end%>
+  <% end%>
   <%= form_with model: @post do |f| %>
     <div class="card border-0">
       <div class="card-body">
