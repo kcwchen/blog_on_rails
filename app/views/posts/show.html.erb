@@ -1,0 +1,9 @@
+<div class="container-fluid mt-3">
+  <div class="card mb-3 border-0">
+    <div class="card-body">
+      <h1 class="card-title"><%= @post.title %></h1>
+      <p class="card-text"><%= @post.body %></p>
+      <small>Posted <%= time_ago_in_words(@post.created_at) %> ago</small>
+    </div>
+  </div>
+</div>
