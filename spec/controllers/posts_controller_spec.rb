@@ -74,5 +74,10 @@ RSpec.describe PostsController, type: :controller do
       delete(:destroy, params: { id: p.id })
       expect(response).to(redirect_to(posts_path))
     end
+    it "should set a flash notice" do
+      p = FactoryBot.create(:post)
+      delete(:destroy, params: { id: p.id })
+      expect(flash[:notice]).to(be)
+    end
   end
 end
