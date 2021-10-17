@@ -32,6 +32,10 @@ RSpec.describe PostsController, type: :controller do
         after_count = Post.all.count
         expect(after_count).to(eq(before_count))
       end
+      it "should render the new template" do
+        post(:create, params: { post: { title: nil, body: "abc" } })
+        expect(response).to(render_template(:new))
+      end
     end
   end
 end
