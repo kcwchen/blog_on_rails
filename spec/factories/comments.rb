@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :comment do
     body { Faker::Lorem.paragraph }
-    post { nil }
+    association(:post, factory: :post)
   end
 end
