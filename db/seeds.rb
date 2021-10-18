@@ -6,14 +6,30 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+Comment.destroy_all
 Post.destroy_all
 
 until Post.all.count == 50
-  Post.create(
+  created_at = Faker::Date.backward(days:365 * 2)
+
+  p = Post.create(
     title: Faker::Book.title,
-    body: Faker::Lorem.paragraph * rand(5..10)
+    body: Faker::Lorem.paragraph * rand(5..10),
+    created_at: created_at,
+    updated_at: created_at
   )
+
+  if p.valid?
+    rand(1..5).times do
+      Comment.create(
+        body: Faker::Lorem.paragraph,
+        post: p
+      )
+    end
+  end
 end
 
-posts = Post.all.count
-puts posts
+posts = Post.all
+comments = Comment.all
+puts posts.count
+puts comments.count
