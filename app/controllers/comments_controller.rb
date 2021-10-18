@@ -3,7 +3,6 @@ class CommentsController < ApplicationController
     @post = Post.find params[:post_id]
     @comment = Comment.new params.require(:comment).permit(:body)
     @comment.post = @post
-    byebug
     if @comment.save
       redirect_to post_path(@post), notice: "Comment submitted"
     else
