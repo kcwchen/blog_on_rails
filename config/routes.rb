@@ -7,5 +7,8 @@ Rails.application.routes.draw do
 
   resources :users, only: [:new, :create, :show, :edit, :update]
 
+  get('/users/:id/edit_password', {to:"users#edit_password", as: :edit_password})
+  patch('/users/:id/edit_password', {to:"users#update_password"})
+
   resource :session, only: [:new, :create, :destroy]
 end
