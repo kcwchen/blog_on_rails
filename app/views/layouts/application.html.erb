@@ -17,6 +17,13 @@
         <div class="navbar-nav">
           <%= link_to "Home", root_path, class: "nav-item nav-link text-primary" %>
           <%= link_to "New Post", new_post_path, class: "nav-item nav-link text-primary" %>
+        <% if user_signed_in? %>
+          <a class="nav-item nav-link disabled">Hello <%= current_user.full_name %></a>
+          <%= link_to "Sign Out", session_path, method: :delete, data: { confirm: "Are you sure you want to sign out?" }, class: "nav-item nav-link text-primary" %>
+        <% else %>
+          <%= link_to "Sign In", new_session_path, class: "nav-item nav-link text-primary" %>
+          <%= link_to "Sign Up", new_user_path, class: "nav-item nav-link text-primary" %>
+        <% end %>
         </div>
       </div>
     </nav>
