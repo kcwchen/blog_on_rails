@@ -10,14 +10,18 @@ class CommentsController < ApplicationController
       redirect_to post_path(@post), notice: "Comment submitted"
     else
       @comments = @post.comments.order(created_at: :desc)
-      render 'post/show'
+      render 'posts/show'
     end
   end
 
   def destroy
     @post = Post.find params[:post_id]
     @comment = Comment.find params[:id]
-    @comment.destroy
-    redirect_to post_path(@post), notice: "Comment Deleted"
+    if can?(:crud, @comment)
+      @comment.destroy
+      redirect_to post_path(@post), notice: "Comment Deleted"
+    else
+      redirect_to post_path(@post), alert: "Not Authorized"
+    end
   end
 end

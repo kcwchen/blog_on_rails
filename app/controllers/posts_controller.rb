@@ -26,12 +26,20 @@ class PostsController < ApplicationController
   end
 
   def destroy
-    @post.destroy
-    redirect_to posts_path, notice: "Post Deleted"
+    if can?(:crud, @post)
+      @post.destroy
+      redirect_to posts_path, notice: "Post Deleted"
+    else
+      redirect_to post_path(@post), alert: "Not Authorized"
+    end
   end
 
   def edit
-
+    if can?(:crud, @post)
+      render :edit
+    else
+      redirect_to post_path(@post), alert: "Not Authorized"
+    end
   end
 
   def update
