@@ -35,7 +35,7 @@ class Ability
     end
 
     can(:crud, Comment) do |comment|
-      user == comment.user
+      user == comment.user || user == comment.post.user
     end
   end
 end
