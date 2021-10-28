@@ -1,5 +1,5 @@
 <div class="container mt-3">
-    <% if @user.errors.any? %>
+  <% if @user.errors.any? %>
     <% @user.errors.full_messages.each do |msg|%>
       <div class="alert alert-danger alert-dismissible fade show" role="alert">
         <%= msg %>
