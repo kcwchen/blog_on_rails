@@ -41,5 +41,13 @@ class Ability
     can(:crud, Comment) do |comment|
       user == comment.user || user == comment.post.user
     end
+
+    can(:crud, User) do |each_user|
+      user == each_user
+    end
+
+    can(:edit_password, User) do |each_user|
+      user == each_user
+    end
   end
 end

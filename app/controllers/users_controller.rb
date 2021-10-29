@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  before_action :find_user, only: [:edit, :update, :edit_password, :update_password]
+
   def new
     @user = User.new
   end
@@ -14,11 +16,14 @@ class UsersController < ApplicationController
   end
 
   def edit
-    @user = current_user
+    if can?(:crud, @user)
+      render :edit
+    else
+      redirect_to root_path, alert: "Not Authorized"
+    end
   end
 
   def update
-    @user = current_user
     if @user.update(user_params)
       flash.now[:notice] = "Account Updated"
       render :edit
@@ -28,11 +33,14 @@ class UsersController < ApplicationController
   end
 
   def edit_password
-    @user = current_user
+    if can?(:edit_password, @user)
+      render :edit_password
+    else
+      redirect_to root_path, alert: "Not Authorized"
+    end
   end
 
   def update_password
-    @user = current_user
     if @user&.authenticate(params[:current_password])
       current_password = params[:current_password]
       new_password = params[:new_password]
@@ -59,6 +67,10 @@ class UsersController < ApplicationController
   end
 
   private
+
+  def find_user
+    @user = User.find params[:id]
+  end
 
   def user_params
     params.require(:user).permit(
