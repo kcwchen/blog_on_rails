@@ -1,5 +1,6 @@
 class PostsController < ApplicationController
   before_action :find_post, only: [:show, :destroy, :edit, :update]
+  before_action :authenticate_user!, except: [:index, :show]
 
   def new
     @post = Post.new
@@ -7,6 +8,7 @@ class PostsController < ApplicationController
 
   def create
     @post = Post.new(post_params)
+    @post.user = current_user
     if @post.save
       redirect_to @post
     else
@@ -24,12 +26,20 @@ class PostsController < ApplicationController
   end
 
   def destroy
-    @post.destroy
-    redirect_to posts_path, notice: "Post Deleted"
+    if can?(:crud, @post)
+      @post.destroy
+      redirect_to posts_path, notice: "Post Deleted"
+    else
+      redirect_to post_path(@post), alert: "Not Authorized"
+    end
   end
 
   def edit
-
+    if can?(:crud, @post)
+      render :edit
+    else
+      redirect_to post_path(@post), alert: "Not Authorized"
+    end
   end
 
   def update
